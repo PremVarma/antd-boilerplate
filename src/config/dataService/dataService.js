@@ -3,10 +3,6 @@ import { getItem } from '../../utility/localStorageControl';
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
 
-const authHeader = () => ({
-  Authorization: `Bearer ${getItem('access_token')}`,
-});
-
 const client = axios.create({
   baseURL: API_ENDPOINT,
   headers: {
@@ -15,42 +11,6 @@ const client = axios.create({
   },
 });
 
-class DataService {
-  static get(path = '') {
-    return client({
-      method: 'GET',
-      url: path,
-      headers: { ...authHeader() },
-    });
-  }
-
-  static post(path = '', data = {}, optionalHeader = {}) {
-    return client({
-      method: 'POST',
-      url: path,
-      data,
-      headers: { ...authHeader(), ...optionalHeader },
-    });
-  }
-
-  static patch(path = '', data = {}) {
-    return client({
-      method: 'PATCH',
-      url: path,
-      data: JSON.stringify(data),
-      headers: { ...authHeader() },
-    });
-  }
-
-  static put(path = '', data = {}) {
-    return client({
-      method: 'PUT',
-      url: path,
-      data: JSON.stringify(data),
-      headers: { ...authHeader() },
-    });
-  }
-}
 
 /**
  * axios interceptors runs before and after a request, letting the developer modify req,req more
